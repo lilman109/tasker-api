@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CreateTaskCommand } from 'src/tasks/comands/create-task.command/create-task.command';
+import { CreateTaskCommand } from 'src/tasks/commands/create-task.command/create-task.command';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @CommandHandler(CreateTaskCommand)
