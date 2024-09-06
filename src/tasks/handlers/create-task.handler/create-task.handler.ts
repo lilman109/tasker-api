@@ -7,10 +7,15 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
   constructor(private readonly prisma: PrismaService) {}
 
   async execute(command: CreateTaskCommand) {
-    const { title } = command;
+    const { title, userId } = command;
     return this.prisma.task.create({
       data: {
         title,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
       },
     });
   }
