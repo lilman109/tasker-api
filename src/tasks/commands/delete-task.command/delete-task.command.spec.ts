@@ -2,6 +2,7 @@ import { DeleteTaskCommand } from './delete-task.command';
 
 describe('DeleteTaskCommand', () => {
   it('should be defined', () => {
-    expect(new DeleteTaskCommand()).toBeDefined();
+    const id = 1;
+    expect(new DeleteTaskCommand(id)).toBeDefined();
   });
 });
