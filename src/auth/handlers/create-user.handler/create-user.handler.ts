@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateUserCommand } from 'src/users/commands/create-user.command/create-user.command';
 import * as bcrypt from 'bcrypt';
+import { CreateUserCommand } from 'src/auth/commands/create-user.command/create-user.command';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
