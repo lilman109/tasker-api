@@ -3,6 +3,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from '../commands/create-user.command/create-user.command';
 import { Request } from 'express';
 import { User } from '@prisma/client';
+import { SignInUserCommand } from '../commands/sign-in-user.command/sign-in-user.command';
 
 @Controller('auth')
 export class AuthController {
@@ -19,6 +20,21 @@ export class AuthController {
     const { username, password } = body;
     const user: User = await this.commandBus.execute(
       new CreateUserCommand(username, password),
+    );
+
+    req.session.userId = user.id;
+
+    return user;
+  }
+
+  @Post('signin')
+  async signin(
+    @Body() body: { username: string; password: string },
+    @Req() req: Request,
+  ) {
+    const { username, password } = body;
+    const user: User = await this.commandBus.execute(
+      new SignInUserCommand(username, password),
     );
 
     req.session.userId = user.id;
