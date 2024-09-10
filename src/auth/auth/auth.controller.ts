@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from '../commands/create-user.command/create-user.command';
 import { User } from '@prisma/client';
@@ -14,7 +14,7 @@ export class AuthController {
 
   @Get()
   async get() {
-    return this.queryBus.execute(new IsUserAuthenticatedQuery());
+    return await this.queryBus.execute(new IsUserAuthenticatedQuery());
   }
 
   @Post('signup')
