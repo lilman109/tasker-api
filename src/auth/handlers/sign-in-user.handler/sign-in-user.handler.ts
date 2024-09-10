@@ -33,7 +33,6 @@ export class SignInUserHandler implements ICommandHandler<SignInUserCommand> {
     }
 
     await this.cacheManager.set('userId', { userId: user.id });
-    const cachedItem = await this.cacheManager.get('userId');
 
     return user;
   }
