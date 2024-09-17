@@ -4,13 +4,21 @@ import { CreateUserCommand } from '../commands/create-user.command/create-user.c
 import { Request } from 'express';
 import { User } from '@prisma/client';
 import { SignInUserCommand } from '../commands/sign-in-user.command/sign-in-user.command';
+import { RedisService } from 'src/redis/redis.service';
+import { IsUserAuthenticatedQuery } from '../queries/is-user-authenticated.query/is-user-authenticated.query';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
+    private readonly redis: RedisService,
   ) {}
+
+  @Get()
+  async get(@Req() req: Request) {
+    return this.queryBus.execute(new IsUserAuthenticatedQuery());
+  }
 
   @Post('signup')
   async create(
@@ -22,7 +30,7 @@ export class AuthController {
       new CreateUserCommand(username, password),
     );
 
-    req.session.userId = user.id;
+    await this.redis.saveUserId(`${user.id}`);
 
     return user;
   }
@@ -37,7 +45,7 @@ export class AuthController {
       new SignInUserCommand(username, password),
     );
 
-    req.session.userId = user.id;
+    await this.redis.saveUserId(`${user.id}`);
 
     return user;
   }

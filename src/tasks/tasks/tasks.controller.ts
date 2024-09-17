@@ -20,9 +20,9 @@ export class TasksController {
   ) {}
 
   @Post()
-  async create(@Body() body: { title: string; userId: number }) {
-    const { title, userId } = body;
-    return this.commandBus.execute(new CreateTaskCommand(title, userId));
+  async create(@Body() body: { title: string }) {
+    const { title } = body;
+    return this.commandBus.execute(new CreateTaskCommand(title));
   }
 
   @Get()
