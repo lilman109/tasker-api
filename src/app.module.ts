@@ -8,6 +8,9 @@ import { UsersModule } from './users/users.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { TaskResolver } from './tasks/task.resolver';
+import { UserResolver } from './users/user.resolver';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -20,8 +23,9 @@ import { join } from 'path';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
+    RedisModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TaskResolver, UserResolver],
 })
 export class AppModule {}
