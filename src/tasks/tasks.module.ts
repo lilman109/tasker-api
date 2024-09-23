@@ -6,10 +6,16 @@ import { PrismaModule } from 'src/prisma/prisma.module';
 import { GetTasksHandler } from './handlers/get-tasks.handler/get-tasks.handler';
 import { DeleteTaskHandler } from './handlers/delete-task.handler/delete-task.handler';
 import { RedisModule } from 'src/redis/redis.module';
+import { TaskResolver } from './task.resolver';
 
 @Module({
   imports: [CqrsModule, PrismaModule, RedisModule],
-  providers: [CreateTaskHandler, GetTasksHandler, DeleteTaskHandler],
+  providers: [
+    CreateTaskHandler,
+    GetTasksHandler,
+    DeleteTaskHandler,
+    TaskResolver,
+  ],
   controllers: [TasksController],
 })
 export class TasksModule {}
